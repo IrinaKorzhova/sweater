@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -40,6 +41,7 @@ public class UserSevice implements UserDetailsService {
         return user;
     }
 
+    @Transactional
     public boolean addUser(User user) {
         User userFromDb = userRepo.findByUsername(user.getUsername());
 
