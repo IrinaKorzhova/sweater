@@ -68,8 +68,7 @@ public class MessageController {
             BindingResult bindingResult,
             Model model,
             @RequestParam(required = false, defaultValue = "") String filter,
-            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
-            @RequestParam("file") MultipartFile file
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) throws IOException {
         message.setAuthor(user);
 
@@ -79,7 +78,6 @@ public class MessageController {
             model.mergeAttributes(errorsMap);
             model.addAttribute("message", message);
         } else {
-            saveFile(message, file);
 
             model.addAttribute("message", null);
 
@@ -138,7 +136,6 @@ public class MessageController {
             @RequestParam("id") Message message,
             @RequestParam("text") String text,
             @RequestParam("tag") String tag,
-            @RequestParam("file") MultipartFile file,
             Model model
     ) throws IOException {
        try {
@@ -151,7 +148,6 @@ public class MessageController {
                    message.setTag(tag);
                }
 
-               saveFile(message, file);
 
                messageRepo.save(message);
            }
