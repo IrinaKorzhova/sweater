@@ -49,10 +49,10 @@ public class MessageController {
     public String main(
             @RequestParam(required = false, defaultValue = "") String filter,
             Model model,
-            @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
             @AuthenticationPrincipal User user
     ) {
-        Page<MessageDto> page = messageService.messageList(pageable, filter, user);
+        Page<MessageDto> page = messageService.messageList(pageable, filter, user, uploadPath);
 
         model.addAttribute("page", page);
         model.addAttribute("url", "/main");
@@ -68,7 +68,7 @@ public class MessageController {
             BindingResult bindingResult,
             Model model,
             @RequestParam(required = false, defaultValue = "") String filter,
-            @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
         message.setAuthor(user);
@@ -86,7 +86,7 @@ public class MessageController {
             messageRepo.save(message);
         }
 
-        Page<MessageDto> page = messageService.messageList(pageable, filter, user);
+        Page<MessageDto> page = messageService.messageList(pageable, filter, user, uploadPath);
         model.addAttribute("page", page);
 
         return "main";
@@ -115,7 +115,7 @@ public class MessageController {
             @PathVariable User author,
             Model model,
             @RequestParam(required = false) Message message,
-            @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         Page<MessageDto> page = messageService.messageListForUser(pageable, currentUser, author);
 

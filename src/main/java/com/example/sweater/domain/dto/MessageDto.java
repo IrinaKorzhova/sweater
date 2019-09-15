@@ -12,6 +12,7 @@ public class MessageDto {
     private String filename;
     private Long likes;
     private Boolean meLiked;
+    private String uploadPath;
 
     public MessageDto(Message message, Long likes, Boolean meLiked) {
         this.id = message.getId();
@@ -53,6 +54,14 @@ public class MessageDto {
 
     public Boolean getMeLiked() {
         return meLiked;
+    }
+
+    public String getUploadPath() {
+        return uploadPath;
+    }
+
+    public void setUploadPath(String uploadPath) {
+        this.uploadPath = uploadPath;
     }
 
     @Override
