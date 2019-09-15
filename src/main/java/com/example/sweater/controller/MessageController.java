@@ -138,20 +138,25 @@ public class MessageController {
             @RequestParam("id") Message message,
             @RequestParam("text") String text,
             @RequestParam("tag") String tag,
-            @RequestParam("file") MultipartFile file
+            @RequestParam("file") MultipartFile file,
+            Model model
     ) throws IOException {
-        if (message.getAuthor().equals(currentUser)) {
-            if (!StringUtils.isEmpty(text)) {
-                message.setText(text);
-            }
+       try {
+           if (message.getAuthor().equals(currentUser)) {
+               if (!StringUtils.isEmpty(text)) {
+                   message.setText(text);
+               }
 
-            if (!StringUtils.isEmpty(tag)) {
-                message.setTag(tag);
-            }
+               if (!StringUtils.isEmpty(tag)) {
+                   message.setTag(tag);
+               }
 
-            saveFile(message, file);
+               saveFile(message, file);
 
-            messageRepo.save(message);
+               messageRepo.save(message);
+           }
+       }catch(NullPointerException e){
+           model.addAttribute("error", "not message with such id");
         }
 
         return "redirect:/user-messages/" + user;
